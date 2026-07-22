@@ -5,7 +5,7 @@ import { HomeIcon } from './common/Icons.jsx'
 import { playBeep, playComplete } from '../utils/sound.js'
 
 // 손가락을 누르고 있어야 하는 총 시간(ms)
-const SCAN_DURATION = 3500
+const SCAN_DURATION = 2500
 // 완료 후 화면을 어둡게 하는 시간(ms)
 const DARK_DURATION = 500
 
@@ -220,7 +220,7 @@ export default function ScanScreen({ question, soundOn, onComplete, onHome }) {
             ) : (
               <>
                 <span className="hint-main">👆 여기를 길게 누르세요</span>
-                <span className="hint-sub">센서를 3초 이상 눌러주세요</span>
+                <span className="hint-sub">센서를 2~3초 눌러주세요</span>
               </>
             )}
           </div>
