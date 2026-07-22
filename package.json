@@ -1,0 +1,21 @@
+{
+  "name": "cyber-online-detector",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "사이버 거짓말 탐지기 - 친구와 장난으로 사용하는 오락용 거짓말 탐지 웹앱",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}

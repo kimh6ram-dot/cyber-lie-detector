@@ -1,0 +1,831 @@
+/* ============================================================
+   화면별 스타일 — 저가형 전자기기 / 옛날 프로그램 톤
+   각진 박스 · 딱딱한 2px 테두리 · 베벨 · 어두운 LCD 표시창
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   공통: 기기 패널 / 표시등 / 메탈 센서 / LCD
+   ------------------------------------------------------------ */
+.device {
+  position: relative;
+  background: var(--device-dark);
+  border: 2px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 16px 16px 14px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.device-lights {
+  display: flex;
+  gap: 8px;
+  align-self: flex-end;
+}
+.led {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background: #4a5663;
+  border: 1px solid #10161c;
+}
+.led-red {
+  background: var(--red);
+}
+.led-green.on {
+  background: var(--green);
+}
+.led-red.on,
+.led-green.on {
+  animation: ledPulse 0.7s steps(1) infinite;
+}
+
+/* 메탈 원형 센서 버튼 */
+.sensor-metal {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 40% 32%, var(--metal-light), var(--metal) 60%, var(--metal-dark));
+  border: 2px solid var(--border-dark);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.4), inset -3px -3px 0 rgba(0, 0, 0, 0.14);
+}
+.sensor-pad {
+  display: grid;
+  place-items: center;
+}
+
+/* 어두운 LCD 표시창 */
+.device-display {
+  color: #4ff0e6; /* 더 선명한 청록 */
+  background: #0d2029; /* 대비 강화용 더 어두운 배경 */
+  border: 2px solid #0a1319;
+  border-radius: 3px;
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* ============================================================
+   1. 시작 화면
+   ============================================================ */
+/* 헤더 아래 여백 축소(시작 화면 한정) */
+.start-screen .topbar {
+  margin-bottom: 4px;
+}
+/* 헤드라인·이미지·버튼을 한 그룹으로, 세로 중앙보다 살짝 위에 배치(가로 가운데) */
+.start-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px; /* 설명↔기계 / 태그↔버튼 */
+  padding-bottom: 72px; /* 중앙보다 살짝 위로 올림 */
+}
+.start-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* 헤드라인+소제목만 아래로(transform이라 아래 이미지·버튼은 그대로) */
+  transform: translateY(18px);
+}
+/* 상단 영문 라벨: 유지(메인 제목보다 확실히 약하게) */
+.start-screen .eyebrow {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: #234d68;
+}
+/* 메인 제목: 화면에서 가장 강한 텍스트(크고 매우 굵게, 자간 좁게) */
+.start-heading .title {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  /* Malgun Gothic은 Bold까지라 스트로크로 더 두껍게(B급 묵직함) */
+  -webkit-text-stroke: 0.7px var(--text-primary);
+}
+/* 설명 문구: 더 크고 또렷하게 */
+.start-screen .subtitle {
+  font-size: 17.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #2b2b2b;
+  margin-top: 8px;
+}
+/* 중앙 대표 비주얼(더 크게) — 이미지는 설명 가까이, 아래 버튼까지 위로 당김 */
+.detector-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px; /* 기계↔태그 */
+  margin-top: -6px;
+  margin-bottom: 0;
+}
+.detector-graphic {
+  width: 100%;
+  max-width: 360px;
+  filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.14));
+}
+/* 시작 버튼: 묶음의 일부 (바닥 고정 아님) */
+.start-btn {
+  width: 100%;
+}
+.detector-graphic svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.detector-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+/* 기계 아래 보조 라벨(한글, 가볍고 읽기 쉬운 캡션 · 우선순위 낮음) */
+.dc-tag {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+/* 시작 버튼: 훨씬 크고 굵게(확실한 CTA) */
+.start-screen .btn-primary {
+  min-height: 58px;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.start-screen .sensor-metal {
+  position: relative;
+  animation: softPulse 2.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   2. 질문 선택 화면
+   ============================================================ */
+.q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.q-header .title {
+  font-size: 21px;
+}
+.chip-btn {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--yellow);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--bevel-out);
+}
+.chip-btn:active {
+  box-shadow: var(--bevel-in);
+}
+
+/* 최근 사용 질문(칩) */
+.recent-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.recent-label {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.recent-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.recent-chips::-webkit-scrollbar {
+  display: none;
+}
+.recent-chip {
+  flex-shrink: 0;
+  max-width: 190px;
+  padding: 8px 11px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--panel-sub);
+  border: 1px solid var(--border-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.recent-chip.active {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--border-strong);
+}
+
+.q-scroll {
+  padding-bottom: 4px;
+}
+.q-section {
+  margin-bottom: 16px;
+}
+.q-section:last-child {
+  margin-bottom: 4px;
+}
+.q-list-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--panel-sub);
+  border: 1px solid var(--border-strong);
+  border-left: 4px solid var(--primary);
+  padding: 5px 9px;
+  margin: 0 0 8px;
+}
+.q-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.q-card {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  font-size: 17.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-primary);
+  background: var(--panel-bg);
+  border: 2px solid var(--border-strong);
+}
+.q-card:active {
+  background: var(--panel-sub);
+}
+.q-card.active {
+  background: var(--surface-selected);
+  border-color: var(--primary);
+}
+/* 랜덤으로 뽑힌 질문 카드: 청록 강조 */
+.q-card.drawn {
+  border-color: var(--cyan);
+  background: var(--scan-soft);
+}
+.q-card-check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+  background: transparent;
+}
+.q-card.active .q-card-check {
+  background: var(--primary);
+}
+.q-card.drawn.active .q-card-check {
+  background: var(--cyan);
+}
+.custom-input {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  background: #fff;
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--bevel-in);
+  padding: 0 12px;
+  min-height: 52px;
+}
+.custom-input.active {
+  border-color: var(--primary);
+}
+.custom-input input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 500;
+  font-family: var(--font);
+  padding: 14px 0;
+}
+.custom-input input::placeholder {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.char-count {
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+/* 선택된 질문 미리보기 */
+.selected-preview {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 3px;
+  background: var(--primary-soft);
+  border: 2px solid var(--primary);
+  color: var(--primary-hover);
+  font-size: 16px;
+  font-weight: 700;
+}
+.selected-dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 1px;
+  background: var(--cyan);
+  border: 1px solid var(--border-dark);
+}
+.selected-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   3. 스캔 화면
+   ============================================================ */
+.scan-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+/* 질문 헤드라인 — 의미 단위로 자연스럽게 줄바꿈(최대 2줄) */
+.scan-question {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.35;
+  max-width: 380px;
+  margin: 0 auto 14px;
+  padding: 0 6px;
+  color: var(--text-primary);
+  word-break: keep-all;
+}
+.quote-mark {
+  color: var(--primary);
+}
+.scan-device {
+  flex: 1;
+  min-height: 0;
+  justify-content: flex-start;
+  gap: 16px; /* 상태 패널 ↔ 센서 (가깝게) */
+}
+/* 센서+안내를 상태 패널 바로 아래에 붙여 위쪽에 배치(한 묶음) */
+.sensor-zone {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px; /* 센서 ↔ 안내 문구 */
+}
+/* 상호작용 센서(메탈 버튼 + 어두운 눌림 영역) */
+.sensor {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.sensor .sensor-metal {
+  width: 100%;
+  height: 100%;
+}
+.sensor:not(.scanning) .sensor-metal {
+  animation: softPulse 2.4s ease-in-out infinite;
+}
+/* 터치 타겟: 청록 외곽 링 */
+.sensor-blink {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 3px solid #16938c;
+}
+.sensor.scanning .sensor-blink {
+  border-color: var(--cyan);
+  animation: ledPulse 0.5s steps(1) infinite;
+}
+/* 안쪽 눌리는 영역(어두운 LCD 느낌) */
+.sensor-inner {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--device-screen);
+  border: 2px solid #0a1319;
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+.scan-line {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: var(--cyan);
+  animation: scanMove 1.4s linear infinite;
+}
+/* 센서 안내 문구 */
+.sensor-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  margin: 0;
+}
+/* 핵심 CTA: 크고 선명하게 */
+.hint-main {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #4ff0e6;
+}
+.hint-sub {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-on-dark-dim);
+}
+
+/* 상태 표시창 (어두운 LCD) */
+.scan-display {
+  width: 100%;
+  background: var(--device-screen);
+  border: 2px solid #0a1319;
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.status-label {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-on-dark);
+}
+.bpm {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--cyan);
+  white-space: nowrap;
+}
+.bpm.blink {
+  animation: ledPulse 0.35s steps(1) infinite;
+}
+.ecg {
+  width: 100%;
+  height: 44px;
+  overflow: hidden;
+  border-top: 1px solid rgba(31, 199, 189, 0.25);
+  border-bottom: 1px solid rgba(31, 199, 189, 0.25);
+  margin-bottom: 12px;
+}
+.ecg-path {
+  animation: ecgFlow linear infinite;
+}
+.progress-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.status-bar-track {
+  flex: 1;
+  height: 16px;
+  border-radius: 2px;
+  background: #06110f;
+  border: 1px solid #0a1319;
+  overflow: hidden;
+}
+.status-bar-fill {
+  height: 100%;
+  background: var(--cyan);
+  transition: width 0.06s linear;
+}
+.progress-num {
+  flex-shrink: 0;
+  width: 50px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+/* 완료 암전 */
+.dark-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0a1319;
+  z-index: 50;
+  animation: fadeIn 0.12s linear both;
+}
+
+/* ============================================================
+   4. 결과 화면
+   ============================================================ */
+.result-flash {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 60;
+  pointer-events: none;
+  animation: flashOnce 0.16s linear forwards;
+}
+.result-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
+}
+.result-body::-webkit-scrollbar {
+  display: none;
+}
+.result-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 2px 0 26px;
+}
+
+/* 측정 질문 상자 */
+.rq-card {
+  background: var(--panel-sub);
+  border: 2px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 10px 14px;
+  text-align: center;
+}
+.rq-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.rq-text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-primary);
+  word-break: keep-all;
+}
+
+/* 결과 상자 (각진 경고창) */
+.result-card {
+  border-radius: 4px;
+  padding: 18px 16px;
+  text-align: center;
+}
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  color: #fff;
+  border: 1px solid var(--border-dark);
+}
+.result-title {
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.result-desc {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0 0 14px;
+  word-break: keep-all;
+}
+
+/* 최종 심박수 표시창 (어두운 LCD) */
+.result-monitor {
+  background: var(--device-screen);
+  border: 2px solid #0a1319;
+  border-radius: 3px;
+  padding: 10px 12px 8px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.rm-label {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-on-dark-dim);
+}
+.rm-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.rm-bpm {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cyan);
+}
+.rm-unit {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+.result-monitor .ecg {
+  width: 100%;
+  height: 28px;
+  border-top: none;
+  border-bottom: none;
+  margin: 2px 0 0;
+}
+
+/* 분석 수치 2칸 */
+.result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.stat {
+  background: var(--panel-sub);
+  border: 2px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 9px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+.stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* 버튼 영역 (상자 바로 아래) */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.btn-share {
+  min-height: 52px;
+  border-radius: 3px;
+  color: #ffffff;
+  background: var(--primary);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--bevel-out);
+}
+.btn-share:active {
+  box-shadow: var(--bevel-in);
+}
+
+/* tone별: 각진 경고 상자(연한 배경 + 진한 색 테두리) */
+.tone-danger .result-card {
+  background: var(--red-light);
+  border: 2px solid var(--red);
+}
+.tone-danger .result-badge {
+  background: var(--red);
+}
+.tone-danger .result-title {
+  color: var(--red-dark);
+}
+
+.tone-safe .result-card {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+}
+.tone-safe .result-badge {
+  background: var(--green);
+}
+.tone-safe .result-title {
+  color: var(--green);
+}
+
+.tone-secret .result-card {
+  background: var(--primary-soft);
+  border: 2px solid var(--primary);
+}
+.tone-secret .result-badge {
+  background: var(--primary);
+}
+.tone-secret .result-title {
+  color: var(--primary);
+}
+
+.tone-error .result-card {
+  background: var(--warning-soft);
+  border: 2px solid var(--warning);
+}
+.tone-error .result-badge {
+  background: var(--warning);
+}
+.tone-error .result-title {
+  color: var(--warning);
+}
+
+/* 토스트 */
+.toast {
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-primary);
+  background: var(--yellow);
+  border: 2px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 9px 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- 초소형 화면(360px 이하) ---------- */
+@media (max-width: 360px) {
+  .sensor {
+    width: 168px;
+    height: 168px;
+  }
+  .detector-graphic {
+    max-width: 300px;
+  }
+  .scan-question {
+    font-size: 22px;
+  }
+  .scan-display {
+    padding: 11px 12px;
+  }
+  .hint-main {
+    font-size: 20px;
+  }
+  .q-card {
+    font-size: 16.5px;
+  }
+}

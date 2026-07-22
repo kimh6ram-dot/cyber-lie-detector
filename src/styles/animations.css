@@ -1,0 +1,116 @@
+/* ============================================================
+   애니메이션 (부드럽고 절제된 기기 느낌)
+   ============================================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 표시등(LED) 부드러운 점멸 */
+@keyframes ledPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* 센서 대기 시 은은한 맥박 */
+@keyframes softPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* 스캔 선 위아래 이동 */
+@keyframes scanMove {
+  0% {
+    top: 12%;
+  }
+  50% {
+    top: 84%;
+  }
+  100% {
+    top: 12%;
+  }
+}
+
+/* 결과 등장 직전 1회 짧은 화면 깜빡임 */
+@keyframes flashOnce {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 결과 카드 등장 */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 거짓말 결과 짧은 흔들림 */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+}
+
+/* 심전도 라인 흐름 */
+@keyframes ecgFlow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.shake {
+  animation: shake 0.22s ease 1;
+}
+.pop-in {
+  animation: popIn 0.24s ease both;
+}
+
+/* 모션 감소 설정 시 최소화 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,359 @@
+/* ============================================================
+   전역 스타일 · 디자인 토큰
+   콘셉트: 저가형 전자기기 · 옛날 컴퓨터 프로그램 결과 창
+   (파스텔/큰 라운드/부드러운 그림자 제거 → 각진 박스 + 딱딱한 테두리)
+   ============================================================ */
+
+:root {
+  /* 배경/패널 */
+  --page-bg: #dfe3e6;
+  --panel-bg: #f4f4f1;
+  --panel-sub: #e5e5df;
+  --device-dark: #263746;
+  --device-screen: #152a34;
+
+  /* 기존 토큰 이름 재매핑 (저가 팔레트) */
+  --background: #dfe3e6;
+  --background-soft: #e5e5df;
+  --surface: #f4f4f1;
+  --surface-soft: #e5e5df;
+  --surface-selected: #d3e0e8;
+
+  --machine-body: #e5e5df;
+  --machine-panel: #263746;
+  --machine-panel-light: #32485a;
+  --machine-border: #4f4f4f;
+  --metal: #cfcfc8;
+  --metal-light: #ebebe5;
+  --metal-dark: #a3a39b;
+
+  --primary: #356b91;
+  --primary-hover: #2a5878;
+  --primary-soft: #d7e6ef;
+  --scan: #1fc7bd;
+  --scan-soft: #cdeeeb;
+
+  --truth: #28a745;
+  --truth-soft: #e0f2e4;
+  --lie: #e94747;
+  --lie-dark: #bb2424;
+  --lie-soft: #ffe4e4;
+  --warning: #d98b1f;
+  --warning-soft: #fff2d6;
+  --yellow: #ffd84d;
+
+  --text-primary: #222222;
+  --text-secondary: #555555;
+  --text-muted: #666666;
+  --text-on-dark: #f5f5f5; /* 어두운 배경 위 밝은 글씨 */
+  --text-on-dark-dim: #d4dede;
+
+  --border: #8b8b8b;
+  --border-strong: #4f4f4f;
+  --border-dark: #4f4f4f;
+
+  /* 사용자 지정 팔레트 별칭 */
+  --text-main: #202020;
+  --text-sub: #666666;
+  --blue: #356b91;
+  --cyan: #1fc7bd;
+  --red: #e94747;
+  --red-dark: #bb2424;
+  --red-light: #ffe4e4;
+  --green: #28a745;
+  --green-light: #e0f2e4;
+
+  /* 그림자: 부드러운 것 제거 → 딱딱한 오프셋(블러 0) */
+  --shadow: 3px 3px 0 rgba(0, 0, 0, 0.22);
+  --shadow-soft: 2px 2px 0 rgba(0, 0, 0, 0.18);
+  --machine-shadow: 4px 4px 0 rgba(0, 0, 0, 0.28);
+
+  /* 베벨(옛날 버튼) */
+  --bevel-out: inset 2px 2px 0 rgba(255, 255, 255, 0.55), inset -2px -2px 0 rgba(0, 0, 0, 0.22);
+  --bevel-in: inset -2px -2px 0 rgba(255, 255, 255, 0.35), inset 2px 2px 0 rgba(0, 0, 0, 0.24);
+
+  /* 각진 모서리 */
+  --radius: 4px;
+  --radius-md: 4px;
+  --radius-sm: 3px;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* 한글 가독성 우선: 읽기 쉬운 시스템 산세리프 */
+  --font: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  /* 영문 라벨/기계 숫자에만 제한적으로 사용 */
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text-primary);
+  background: var(--page-bg);
+  display: flex;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.app {
+  -webkit-user-select: none;
+  user-select: none;
+}
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* ------------------------------------------------------------
+   앱 셸 = 옛날 프로그램 창(각진 베이지 패널 + 딱딱한 테두리)
+   ------------------------------------------------------------ */
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  border-left: 2px solid var(--border-strong);
+  border-right: 2px solid var(--border-strong);
+  padding: calc(12px + var(--safe-top)) 14px calc(14px + var(--safe-bottom));
+  overflow: hidden;
+}
+
+/* 결과 화면: 앱 창을 콘텐츠 높이에 맞게 줄이고 세로 중앙 배치 */
+.app:has(.result-screen) {
+  height: auto;
+  max-height: calc(100dvh - 20px);
+  align-self: center;
+}
+
+/* 모바일: 줄어든 결과 창을 각진 박스로 */
+@media (max-width: 479px), (max-height: 719px) {
+  .app:has(.result-screen) {
+    border: 2px solid var(--border-strong);
+    box-shadow: var(--shadow);
+  }
+}
+
+/* 데스크톱/큰 화면: 창처럼 띄우기 */
+@media (min-width: 480px) and (min-height: 720px) {
+  body {
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: var(--page-bg);
+  }
+  .app {
+    height: min(calc(100dvh - 44px), 820px);
+    border: 2px solid var(--border-strong);
+    box-shadow: var(--machine-shadow);
+  }
+  .app:has(.result-screen) {
+    height: auto;
+    max-height: calc(100dvh - 44px);
+  }
+}
+
+.screen {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.1s linear both;
+}
+
+.scroll-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 1px solid var(--border-strong);
+}
+.scroll-area::-webkit-scrollbar-track {
+  background: var(--panel-sub);
+}
+
+/* ------------------------------------------------------------
+   상단 바 (프로그램 제목 줄 느낌)
+   ------------------------------------------------------------ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  min-height: 38px;
+  flex-shrink: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #444444;
+}
+.brand .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 1px;
+  background: var(--red, var(--lie));
+  border: 1px solid var(--border-dark);
+}
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  display: grid;
+  place-items: center;
+  color: var(--text-primary);
+  background: var(--panel-sub);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--bevel-out);
+}
+.icon-btn:active {
+  box-shadow: var(--bevel-in);
+}
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ------------------------------------------------------------
+   버튼 (옛날 베벨 버튼)
+   ------------------------------------------------------------ */
+.btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 3px;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--bevel-out);
+}
+.btn:active {
+  box-shadow: var(--bevel-in);
+}
+.btn-primary {
+  color: #ffffff;
+  background: var(--primary);
+}
+.btn-primary:disabled {
+  color: #f0f0f0;
+  background: #a9adb0;
+  box-shadow: var(--bevel-out);
+  cursor: not-allowed;
+}
+.btn-ghost {
+  color: var(--text-primary);
+  background: var(--panel-sub);
+}
+.btn-sm {
+  min-height: 48px;
+  font-size: 16.5px;
+}
+
+.bottom-actions {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.row-2 {
+  display: flex;
+  gap: 8px;
+}
+.row-2 > * {
+  flex: 1;
+}
+
+/* 헤딩 */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--primary);
+  margin: 0;
+}
+h1.title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--text-primary);
+}
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
+/* 패널 카드 (각진 박스) */
+.panel {
+  background: var(--panel-bg);
+  border: 2px solid var(--border-strong);
+  border-radius: 4px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
